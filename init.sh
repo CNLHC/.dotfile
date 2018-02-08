@@ -1,12 +1,12 @@
 #!/bin/bash
-sudo apt install python python3 python-pip python3-pip git build-essential vim zsh
-git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle &
-cat 'source ~/.vim/.vimrc' >  $HOME/.vimrc
-cat 'source ~/.vim/.zshrc' >  $HOME/.zshrc
-mkdir $HOME/pip
-cat '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.config
 
-##!/bin/bash
+echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
+echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
+mkdir $HOME/.pip
+echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+
+sudo apt install python python3 python-pip python3-pip git build-essential vim zsh
+
 #wget ftp://ftp.vim.org/pub/vim/unix/vim-8.0.tar.bz2 
 #tar jxvf vim-8.0.tar.bz2
 #cd vim80/
@@ -15,6 +15,7 @@ cat '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pi
 #sudo make 
 #sudo make install
 
+git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle 
 
 main() {
   # Use colors, but only if connected to a terminal, and that terminal
