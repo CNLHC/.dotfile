@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt install python python3 python-pip python3-pip git build-essential vim zsh
-git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle &
-cat 'source ~/.vim/.vimrc' >  $HOME/.vimrc
+#git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle &
+#cat 'source ~/.vim/.vimrc' >  $HOME/.vimrc
 cat 'source ~/.vim/.zshrc' >  $HOME/.zshrc
 mkdir $HOME/pip
 cat '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.config
