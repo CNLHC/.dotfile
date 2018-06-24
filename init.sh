@@ -1,20 +1,5 @@
 #!/bin/bash
 sudo apt install python python3 python-pip python3-pip git build-essential vim zsh
-git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle &
-cat 'source ~/.vim/.vimrc' >  $HOME/.vimrc
-cat 'source ~/.vim/.zshrc' >  $HOME/.zshrc
-mkdir $HOME/pip
-cat '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.config
-
-##!/bin/bash
-#wget ftp://ftp.vim.org/pub/vim/unix/vim-8.0.tar.bz2 
-#tar jxvf vim-8.0.tar.bz2
-#cd vim80/
-#sudo apt-get install python-dev libncurses5-dev
-#./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp --enable-multibyte --prefix=/usr
-#sudo make 
-#sudo make install
-
 
 main() {
   # Use colors, but only if connected to a terminal, and that terminal
