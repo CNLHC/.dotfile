@@ -52,6 +52,7 @@
 	let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 	let g:ycm_key_invoke_completion = '<C-Space>'
 	let g:ycm_key_detailed_diagnostics = '<leader>d'
+    let g:ycm_python_binary_path = '/usr/bin/python3'
 "Airline
 	let g:airline_theme="solarized"
     let g:airline_powerline_fonts = 1

@@ -6,7 +6,7 @@ func! Change_Python_Edition(ver)
     elseif a:ver =='3'
         echo "change to py3"
         let g:Compile_Python="python3"
-        let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+        let g:syntastic_python_python_exec = '/usr/local/bin/python3.7'
     endif
 endfunc 
 func! Compile_Tex()
