@@ -8,7 +8,7 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="arrow"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -94,8 +94,7 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 alias pyuic5= "python3 -m PyQt5.uic.pyuic"
 
 alias VPS_Ali='ssh root@47.95.205.174'
-alias VPS_Vultr='ssh root@www.cnworkshop.tech'
-alias VPS_Pi='ssh lhc@10.17.206.16'
+alias VPS_VULTR='ssh root@future.cnworkshop.xyz'
 
 autoload -U up-line-or-beginning-search 
 autoload -U down-line-or-beginning-search 

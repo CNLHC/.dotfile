@@ -63,7 +63,7 @@ func! Compile()
 endfunc
 func! Run()
 	if &filetype == "python3"
-		exec "!python3 %"
+		exec "!python3.7 %"
 	elseif &filetype== "python"
 		exec "!".g:Compile_Python." % "
 	elseif &filetype== "graphviz"

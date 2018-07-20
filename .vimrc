@@ -44,11 +44,11 @@ call vundle#rc()
 	"Plugin 'scrooloose/syntastic'
 	"Plugin 'plasticboy/vim-markdown'
 	"Plugin 'isnowfy/python-vim-instant-markdown'
-	"Plugin 'Valloric/YouCompleteMe'
+	Plugin 'Valloric/YouCompleteMe'
 	"Plugin 'vim-airline/vim-airline'
 	"Plugin 'vim-airline/vim-airline-themes'
-	Plugin 'mattn/emmet-vim'
-	Plugin 'vim-latex/vim-latex'
+	"Plugin 'mattn/emmet-vim'
+    "Plugin 'vim-latex/vim-latex'
 	Plugin 'tpope/vim-surround'
 	"Blog.vim can't be manged by vundle
 	source $HOME/.vim/profile/plugin.vim
