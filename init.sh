@@ -1,13 +1,12 @@
 #!/bin/bash
 echo "Resolving config files"
-
 sudo echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
 sudo echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
 sudo mkdir $HOME/.pip
 sudo echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
 sudo cp ~/.vim/tuna-ubuntu-18.04 > /etc/apt/sources.list
-sudo rsync -r --delete ~/terminator ~/.config/
+sudo rsync -r  ~/.vim/.config ~/.config/
 
 
 echo "Adding TUNA Docker-CE Source"
@@ -107,7 +106,6 @@ main() {
     printf "Error: git clone of oh-my-zsh repo failed\n"
     exit 1
   }
-
 
   printf "${BLUE}Looking for an existing zsh config...${NORMAL}\n"
   if [ -f ~/.zshrc ] || [ -h ~/.zshrc ]; then
