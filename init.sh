@@ -1,11 +1,34 @@
 #!/bin/bash
+echo "Resolving config files"
 
-echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
-echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
-mkdir $HOME/.pip
-echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+sudo echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
+sudo echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
+sudo mkdir $HOME/.pip
+sudo echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo cp ~/.vim/tuna-ubuntu-18.04 > /etc/apt/sources.list
+sudo rsync -r --delete ~/terminator ~/.config/
 
-sudo apt install python python3 python-pip python3-pip git build-essential vim zsh
+
+echo "Adding TUNA Docker-CE Source"
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+
+echo "Installing basic packages"
+sudo apt-get --assume-yes update
+sudo apt-get install --assume-yes \
+  terminator \
+  python python3 python-pip python3-pip \
+  git build-essential \
+  vim zsh \
+  apt-transport-https ca-certificates curl gnupg2 software-properties-common \
+  docker-ce
+
+
 
 #wget ftp://ftp.vim.org/pub/vim/unix/vim-8.0.tar.bz2 
 #tar jxvf vim-8.0.tar.bz2
@@ -15,7 +38,7 @@ sudo apt install python python3 python-pip python3-pip git build-essential vim z
 #sudo make 
 #sudo make install
 
-git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle 
+#git clone https://github.com/gmarik/vundle $HOME/.vim/bundle/vundle 
 
 main() {
   # Use colors, but only if connected to a terminal, and that terminal
