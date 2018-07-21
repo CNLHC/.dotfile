@@ -1,0 +1,27 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    {
+        "key": "ctrl+alt+pagedown",
+        "command": "workbench.action.terminal.focusNext"
+    },
+    {
+        "key": "ctrl+alt+pageup",
+        "command": "workbench.action.terminal.focusPrevious"
+    },
+    {
+        "key": "ctrl+alt+insert",
+        "command": "python.createTerminal"
+    },
+    {
+        "key": "ctrl+shift+`",
+        "command": "workbench.action.terminal.focus"
+    },
+    {
+        "key": "ctrl+f5",
+        "command": "python.execInTerminal"
+    },
+    {
+        "key": "shift+alt+t",
+        "command": "python.selectAndRunTestFile"
+    }
+]

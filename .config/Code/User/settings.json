@@ -1,0 +1,50 @@
+{
+    "workbench.colorTheme": "Hopscotch (TextMate Theme)",
+    "window.zoomLevel": 1,
+    "git.autofetch": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latexCompile.compiler": "xelatex",
+    "latex-preview.command": "xelatex",
+    "latex-workshop.latex.recipes": [
+        {
+          "name": "xelatex -> bibtex -> xelatex*2",
+          "tools": [
+            "xelatex",
+            "bibtex",
+            "xelatex",
+            "xelatex",
+          ]
+        }
+      ],
+      "latex-workshop.latex.tools": [
+        {
+          "name": "xelatex",
+          "command": "xelatex ",
+          "args": [
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "%DOC%"
+          ]
+        },
+        {
+          "name": "bibtex",
+          "command": "bibtex",
+          "args": [
+            "%DOCFILE%"
+          ]
+        }
+      ],
+      "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+      },
+      "gitlens.historyExplorer.enabled": true,
+      "explorer.confirmDelete": false,
+    "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
+    "editor.insertSpaces": true,
+    "autoDocstring.docstringFormat": "sphinx",
+    "git.enableSmartCommit": true,
+    "python.linting.pylintEnabled": false,
+    "python.pythonPath": "/usr/bin/python3",
+}
