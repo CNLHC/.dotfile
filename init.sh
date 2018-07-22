@@ -1,23 +1,22 @@
 #!/bin/bash
+echo '-----------------------------------'
 echo "Resolving config files"
-sudo echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
-sudo echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
-sudo mkdir $HOME/.pip
-sudo echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+echo '-----------------------------------'
+echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
+echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
+# Using TUNA Pip sources
+mkdir -p $HOME/.pip
+echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+# Using TUNA apt sources
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
-sudo cp ~/.vim/tuna-ubuntu-18.04 > /etc/apt/sources.list
-sudo rsync -r  ~/.vim/.config ~/.config/
+sudo cp ~/.vim/.tuna-ubuntu-18.04  /etc/apt/sources.list
+# Sync other settings
+mkdir -p ~/.config 
+rsync -r  ~/.vim/.config ~ --verbose
 
-
-echo "Adding TUNA Docker-CE Source"
-sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-
-sudo add-apt-repository \
-   "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian \
-   $(lsb_release -cs) \
-   stable"
-
+echo '-----------------------------------'
 echo "Installing basic packages"
+echo '-----------------------------------'
 sudo apt-get --assume-yes update
 sudo apt-get install --assume-yes \
   terminator \
@@ -25,9 +24,22 @@ sudo apt-get install --assume-yes \
   git build-essential \
   vim zsh \
   apt-transport-https ca-certificates curl gnupg2 software-properties-common \
-  docker-ce
+  curl
 
 
+echo '-----------------------------------'
+echo "Adding TUNA Docker-CE Source"
+echo '-----------------------------------'
+
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt install -y docker-ce
 
 #wget ftp://ftp.vim.org/pub/vim/unix/vim-8.0.tar.bz2 
 #tar jxvf vim-8.0.tar.bz2
