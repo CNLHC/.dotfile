@@ -92,9 +92,12 @@ source $ZSH/oh-my-zsh.sh
 #User Define
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 alias pyuic5= "python3 -m PyQt5.uic.pyuic"
-
 alias VPS_Ali='ssh root@47.95.205.174'
 alias VPS_VULTR='ssh root@future.cnworkshop.xyz'
+alias c='xclip'
+alias v='xclip -o'
+
+
 
 autoload -U up-line-or-beginning-search 
 autoload -U down-line-or-beginning-search 
