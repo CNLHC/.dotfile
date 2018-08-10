@@ -1,9 +1,10 @@
 #!/bin/bash
 echo "Resolving config files"
-sudo echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
-sudo echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
-sudo mkdir $HOME/.pip
-sudo echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+echo "source ~/.vim/.vimrc" >  $HOME/.vimrc
+echo "source ~/.vim/.zshrc" >  $HOME/.zshrc
+mkdir $HOME/.pip
+echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.conf
+
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
 sudo cp ~/.vim/tuna-ubuntu-18.04 > /etc/apt/sources.list
 sudo rsync -r  ~/.vim/.config ~/.config/
@@ -20,7 +21,7 @@ sudo add-apt-repository \
 echo "Installing basic packages"
 sudo apt-get --assume-yes update
 sudo apt-get install --assume-yes \
-  terminator \
+  terminator xclip\
   python python3 python-pip python3-pip \
   git build-essential \
   vim zsh \

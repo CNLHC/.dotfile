@@ -90,13 +90,20 @@ source $ZSH/oh-my-zsh.sh
 
 
 #User Define
+source $HOME/.vim/.device.zshrc
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 alias pyuic5= "python3 -m PyQt5.uic.pyuic"
+alias mvim='vim'
 alias VPS_Ali='ssh root@47.95.205.174'
 alias VPS_VULTR='ssh root@future.cnworkshop.xyz'
+
+# 使用xclip处理终端中的复制与粘帖
 alias c='xclip'
 alias v='xclip -o'
 
+# 文档查找
+
+alias findoc='find $HC_LIBRARY_ROOT -name'
 
 
 autoload -U up-line-or-beginning-search 
