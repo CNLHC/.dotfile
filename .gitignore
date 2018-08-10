@@ -1,1 +1,4 @@
 bundle/
+.device.zshrc
+
+*.swp

@@ -19,7 +19,7 @@ echo "Installing basic packages"
 echo '-----------------------------------'
 sudo apt-get --assume-yes update
 sudo apt-get install --assume-yes \
-  terminator \
+  terminator xclip\
   python python3 python-pip python3-pip \
   git build-essential \
   vim zsh \
