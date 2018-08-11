@@ -102,9 +102,9 @@ alias c='xclip'
 alias v='xclip -o'
 
 # 文档查找
-
-alias findoc='find $HC_LIBRARY_ROOT -name'
-
+findoc(){
+    find  $HC_LIBRARY_ROOT -name "*$1*"
+}
 
 autoload -U up-line-or-beginning-search 
 autoload -U down-line-or-beginning-search 
