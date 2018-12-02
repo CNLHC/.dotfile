@@ -44,7 +44,7 @@ call vundle#rc()
 	"Plugin 'scrooloose/syntastic'
 	"Plugin 'plasticboy/vim-markdown'
 	"Plugin 'isnowfy/python-vim-instant-markdown'
-	"Plugin 'Valloric/YouCompleteMe'
+	Plugin 'Valloric/YouCompleteMe'
 	"Plugin 'vim-airline/vim-airline'
 	"Plugin 'vim-airline/vim-airline-themes'
 	Plugin 'mattn/emmet-vim'
