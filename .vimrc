@@ -16,7 +16,7 @@ set number
 set autoindent
 set tabstop=4
 set shiftwidth=4
-set smartindent
+set autoindent
 set foldmethod=indent
 set helpheight=20
 autocmd! bufwritepost .vimrc source $HOME/.vim/.vimrc
@@ -31,6 +31,13 @@ map <F2> :call Change_Python_Edition('2')
 nnoremap <silent> <leader>ee :e $HOME/.vim/.vimrc<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>c :call Compile()<CR><CR>:call Run()<CR>
+nnoremap <C-k>s  :call SyntasticToggleMode()<CR>
+nnoremap <C-k>o  :lopen<CR>
+nnoremap <C-k>c  :lclose<CR>
+runtime macros/matchit.vim
+
+
+
 "======================插件管理======================
 filetype off 
 set rtp+=~/.vim/bundle/vundle/
@@ -41,12 +48,13 @@ call vundle#rc()
     "Plugin 'CNLHC/VIpress'
 	"Plugin 'CNLHC/VIqiniu'
 	Plugin 'scrooloose/nerdtree'
-	"Plugin 'scrooloose/syntastic'
+	Plugin 'scrooloose/syntastic'
 	"Plugin 'plasticboy/vim-markdown'
 	"Plugin 'isnowfy/python-vim-instant-markdown'
-	"Plugin 'Valloric/YouCompleteMe'
-	"Plugin 'vim-airline/vim-airline'
-	"Plugin 'vim-airline/vim-airline-themes'
+    Plugin 'vhda/verilog_systemverilog.vim'
+	Plugin 'Valloric/YouCompleteMe'
+	Plugin 'vim-airline/vim-airline'
+	Plugin 'vim-airline/vim-airline-themes'
 	Plugin 'mattn/emmet-vim'
 	Plugin 'vim-latex/vim-latex'
 	Plugin 'tpope/vim-surround'

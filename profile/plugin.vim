@@ -7,6 +7,8 @@
 	set statusline+=%#warningmsg#
 	set statusline+=%{SyntasticStatuslineFlag()}
 	set statusline+=%*
+    let g:syntastic_verilog_compiler='verilator'
+    let g:syntastic_verilog_checkers = ['verilator','iverilog']
 	let g:syntastic_always_populate_loc_list = 1
 	let g:syntastic_auto_loc_list = 1
 	let g:syntastic_check_on_open = 1
@@ -53,7 +55,7 @@
 	let g:ycm_key_invoke_completion = '<C-Space>'
 	let g:ycm_key_detailed_diagnostics = '<leader>d'
 "Airline
-	let g:airline_theme="solarized"
+	let g:airline_theme="luna"
     let g:airline_powerline_fonts = 1
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#tabline#buffer_nr_show = 1
