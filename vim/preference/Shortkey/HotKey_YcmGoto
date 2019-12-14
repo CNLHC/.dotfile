@@ -1,0 +1,12 @@
+map goi   :YcmCompleter GoToInclude<CR>
+map godc  :YcmCompleter GoToDeclaration<CR>
+map god   :YcmCompleter GoToDefinition<CR>
+map goerr :YcmCompleter GoToImprecise<CR>
+map goref :YcmCompleter GoToReferences<CR>
+map get   :YcmCompleter GetType<CR>
+map gep   :YcmCompleter GetParent<CR>
+map ged   :YcmCompleter GetDoc<CR>
+"map :YcmCompleter GoToImplementation<CR>
+"map :YcmCompleter GoToImplementationElseDeclaration<CR>
+"map :YcmCompleter GetDocImprecise<CR>
+"map :YcmCompleter GetTypeImprecise<CR>

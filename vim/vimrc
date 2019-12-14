@@ -1,0 +1,50 @@
+colorscheme desert
+set encoding=utf-8
+set backspace=2		
+set autoindent
+set smartindent
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set modelines=0		
+set number
+set foldmethod=indent
+set helpheight=20
+
+set background=dark
+syntax on
+filetype on
+
+autocmd! bufwritepost vimrc source ~/.dotfile/vim/vimrc
+source ~/.dotfile/vim/preference/plugin.vim
+
+let mapleader= '\'
+map <F5> :call Compile()<CR>
+map <F6> :call Run()<CR>
+map <F7> :call Debug()<CR>
+
+nnoremap <silent> <leader>ee :e <CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>c :call Compile()<CR><CR>:call Run()<CR>
+"======================插件管理======================
+set nocompatible
+filetype off 
+set rtp+=~/.vim/bundle/vundle/
+
+call vundle#rc()
+
+"MyPlugin
+Bundle 'SuperTab'
+Plugin 'gmarik/vundle'
+Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/syntastic'
+"Plugin 'plasticboy/vim-markdown'
+"Plugin 'isnowfy/python-vim-instant-markdown'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-latex/vim-latex'
+Plugin 'tpope/vim-surround'
+filetype plugin indent on 
+
