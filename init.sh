@@ -1,16 +1,33 @@
 #!/bin/bash
-sudo apt install python\
+sudo apt install -y  python\
 		 python3\
 		 python-pip\
 		 python3-pip\
+         curl\
 		 git\
 		 build-essential\
-		 nvim\
-		 zsh\
-git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/vundle &
+		 neovim\
+		 zsh
 
-echo 'source ~/.vim/.vimrc' >  $HOME/.vimrc
-echo 'source ~/.vim/.zshrc' >  $HOME/.zshrc
-mkdir $HOME/pip
-cat '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > $HOME/.pip/pip.config
+if [ ! -d ~/.config/nvim ]; then
+    echo "make nvim config dir"
+    mkdir -p ~/.config/nvim;
+fi
+
+echo "source-file ~/.dotfile/tmux/tmux.conf" > ~/.tmux.conf
+echo "source ~/.dotfile/vim/vimrc" > ~/.config/nvim/init.vim
+
+if [ ! -d  ~/.config/nvim/bundle/Vundle.vim ]; then
+    echo "get vundle"
+    git clone https://github.com/VundleVim/Vundle.vim ~/.config/nvim/bundle/Vundle.vim
+else
+    echo "vundle exists"
+fi
+
+if [ ! -d ~/.oh-my-zsh/ ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+    echo "oh-my-zsh exists"
+fi
+
 
