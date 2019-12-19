@@ -7,9 +7,11 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 set modelines=0		
-set number
+
+" hybrid absolute and relative line number
+set nu rnu
 set foldmethod=indent
-set helpheight=20
+set helpheight=40
 
 set background=dark
 syntax on
@@ -23,15 +25,22 @@ map <F5> :call Compile()<CR>
 map <F6> :call Run()<CR>
 map <F7> :call Debug()<CR>
 
-nnoremap <silent> <leader>ee :e <CR>
+nnoremap <silent> <leader>ee :e ~/.dotfile/vim/vimrc <CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>c :call Compile()<CR><CR>:call Run()<CR>
+let g:racer_cmd = "/home/cn/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
+let g:racer_insert_paren = 1
+
+
 "======================插件管理======================
 set nocompatible
 filetype off 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.config/nvim/bundle/Vundle.vim
 
-call vundle#rc()
+
+call vundle#begin()
+
 
 "MyPlugin
 Bundle 'SuperTab'
@@ -40,11 +49,16 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'scrooloose/syntastic'
 "Plugin 'plasticboy/vim-markdown'
 "Plugin 'isnowfy/python-vim-instant-markdown'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 "Plugin 'vim-airline/vim-airline'
 "Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-latex/vim-latex'
 Plugin 'tpope/vim-surround'
+Plugin 'racer-rust/vim-racer'
+
+
+call vundle#end()            " required
 filetype plugin indent on 
+
 
