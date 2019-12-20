@@ -32,6 +32,16 @@ nnoremap <silent> <leader>ee :e ~/.dotfile/vim/vimrc <CR>
 nnoremap <silent> <leader>ep :e ~/.dotfile/vim/preference/plugin.vim <CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>c :call Compile()<CR><CR>:call Run()<CR>
+
+nnoremap gi :YcmCompleter GoToInclude<CR>
+nnoremap gd :YcmCompleter GoToDefinition<CR>
+nnoremap gl :YcmCompleter GoToDeclaration<CR>
+nnoremap gt :YcmCompleter GoTo<CR>
+
+nnoremap tn :tabn<CR>
+nnoremap tp :tabp<CR>
+
+
 let g:racer_cmd = "/home/cn/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 let g:racer_insert_paren = 1
