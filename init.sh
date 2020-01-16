@@ -1,4 +1,5 @@
 #!/bin/bash
+
 sudo apt install -y  python\
 		 python3\
 		 python-pip\
@@ -8,6 +9,8 @@ sudo apt install -y  python\
 		 build-essential\
 		 neovim\
 		 zsh
+
+
 
 if [ ! -d ~/.config/nvim ]; then
     echo "make nvim config dir"
@@ -29,5 +32,14 @@ if [ ! -d ~/.oh-my-zsh/ ]; then
 else
     echo "oh-my-zsh exists"
 fi
+
+
+
+tc=$(grep -c "source ~/.dotfile/zsh/alias.zsh" ~/.zshrc )
+
+if [  $tc -le 0  ]; then
+    echo "source ~/.dotfile/zsh/alias.zsh" >> ~/.zshrc
+fi
+
 
 
