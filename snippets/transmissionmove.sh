@@ -1,0 +1,126 @@
+
+#!/bin/bash
+
+# Simple shell script to rename all Transmission destination paths at
+# once (by editing resume files)
+
+# Copyright (c) 2011, 2017 transmission-batch-move authors (see AUTHORS file)
+# Licensed under The MIT License (see LICENSE file)
+
+CONFIG="${HOME}/.config/transmission"
+
+help() {
+    cat <<EOF
+Usage: ${0##*/} [OPTIONS] PATTERN REPLACEMENT
+
+Change all torrents location. Do NOT move actual downloaded files,
+just change their location in *.resume files.
+
+Options:
+ -h, --help    Displays this help.
+ -y, --yes     Ignore safety prompt.
+ --path=PATH   Specify configuration folder where resume directory
+               is located. Default is "$CONFIG"
+EOF
+}
+
+# parse switches
+for i in "$@"
+do
+case $i in
+    -h|--help)
+    help
+    exit 0
+    ;;
+    --path=*)
+    CONFIG="${i#*=}"
+    shift
+    ;;
+    -y|--yes)
+    REPLY=y
+    shift
+    ;;
+    *)
+    # ignore positional arguments
+    ;;
+esac
+done
+
+RESUME="${CONFIG}/resume"
+ORIG="${CONFIG}/resume-$(date +%Y%m%d-%H%M%S)"
+
+if (( $# != 2 )); then
+    help
+    exit 2
+fi
+
+if test ! -d "${RESUME}"; then
+    echo "error: $RESUME doesn't exist or is not a directory"
+    exit 1
+fi
+
+if test -d "$ORIG"; then
+    echo "error: $ORIG already exists"
+    exit 1
+fi
+
+echo "Transimission configuration folder: $CONFIG"
+echo "Resume files folder: $RESUME"
+echo "Backup folder: $ORIG"
+echo "PATTERN: $1"
+echo "REPLACEMENT: $2"
+
+while [[ ! "$REPLY" =~ [yY]$ ]] && [[ ! "$REPLY" =~ [nN]$ ]]
+do
+    read -p "Continue? y/N " -n 1 -r REPLY
+    echo    # move to a new line
+done
+
+[[ "$REPLY" =~ [nN]$ ]] && exit 0;
+
+
+# escape comma in PATTERN and REPLACEMENT for use in sed
+PATTERN=$(sed -e "s=,=\\\\,=g" <<< "$1")
+REPLACEMENT=$(sed -e "s=,=\\\\,=g" <<< "$2")
+
+
+echo "copying $RESUME to $ORIG"
+cp -R "$RESUME" "$ORIG"
+test $? == 0 || exit 1
+echo "copying finished"
+
+echo "processing directory \"${RESUME}\"..."
+
+find "$RESUME" -type f -name "*.resume" | while read file
+do
+    echo "processing $(basename "$file")"
+
+    # calculate destination position
+    dest=$(grep -aob "11:destination[0-9]\+" "$file")
+    old_len=$(grep -o "[0-9]\+$" <<< "$dest")
+    pos=$(grep -o "^[0-9]\+" <<< "$dest")
+    end=$(($pos+14+${#old_len}+1+$old_len))
+
+    # fetch the destination path, make the substitution
+    old_path="$(head -c $end "$file"| tail -c $old_len)"
+    new_path="$(sed -e "s,${PATTERN},${REPLACEMENT}," <<< "$old_path")"
+
+    if test "$old_path" = "$new_path"; then
+        echo "no changes needed"
+        continue
+    fi
+
+    # new path length in bytes, not characters
+    new_len=$(echo -n "$new_path" | wc -c)
+    new_dest="11:destination${new_len}:${new_path}"
+
+    # write temporary file and replace the original one
+    tmpfile="${file}.tmp.$$"
+    head -c $pos "$file" > "$tmpfile"
+    echo -n "$new_dest" >> "$tmpfile"
+    tail -c +$((${end}+1)) "$file" >> "$tmpfile"
+    mv "$tmpfile" "$file"
+
+    echo "file processed"
+done
+
