@@ -17,12 +17,15 @@ if [ ! -d ~/.config/nvim ]; then
 fi
 
 
-# install dein
-if [ ! -d  ~/.cache/dein ]; then
-    echo "get dein"
-    curl -s https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | bash /dev/stdin  ~/.cache/dein 
+# install vim-plug
+if [ ! -e  ~/.local/share/nvim/site/autoload/plug.vim ]; then
+    echo "get vim-plug"
+    curl --create-dirs \
+         -fLo \
+         ~/.local/share/nvim/site/autoload/plug.vim \
+         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 else
-    echo "dein exists"
+    echo "vim-plug exists"
 fi
 
 
