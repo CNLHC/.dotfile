@@ -81,10 +81,12 @@ nnoremap <silent> <leader>ep :e ~/.dotfile/vim/preference/plugin.vim <CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>c :call Compile()<CR><CR>:call Run()<CR>
 
-nnoremap gi :YcmCompleter GoToInclude<CR>
-nnoremap gd :YcmCompleter GoToDefinition<CR>
-nnoremap gl :YcmCompleter GoToDeclaration<CR>
-nnoremap gp :YcmCompleter GoTo<CR>
+nmap gi         <Plug>(coc-implementation)
+nmap gd         <Plug>(coc-definition)
+nmap gl         <Plug>(coc-declaration)     
+nmap gr         <Plug>(coc-references)     
+nmap <F8>       <Plug>(coc-diagnostic-next)
+nmap <S-F8>     <Plug>(coc-diagnostic-prev-error)
 
 nnoremap tn :tabn<CR>
 nnoremap tp :tabp<CR>
@@ -97,7 +99,8 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 call plug#begin('~/.vim/plugged')
 
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+    Plug 'preservim/nerdtree'
+    Plug 'rhysd/vim-clang-format'
 
 
 call plug#end()
