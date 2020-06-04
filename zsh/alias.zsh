@@ -2,6 +2,7 @@ alias pdf="df -H -x tmpfs -x overlay --output"
 alias edit_alias="vim ~/.dotfile/zsh/alias.zsh"
 alias source_conf="source ~/.zshrc"
 alias edit_zshrc="vim ~/.zshrc"
+alias vim=nvim
 
 function kill_by_grep {
      ps -aux | grep  $1 | tr -s ' '| cut -d ' ' -f2 | xargs kill -9 ;
