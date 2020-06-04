@@ -48,6 +48,8 @@
 	let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 	let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 	let g:ycm_key_invoke_completion = '<C-Space>'
+    let g:ycm_server_python_interpreter = '/usr/bin/python3'
+
 	let g:ycm_key_detailed_diagnostics = '<leader>d'
 "Airline
 	let g:airline_theme="solarized"

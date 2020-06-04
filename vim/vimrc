@@ -88,12 +88,14 @@ nmap gr         <Plug>(coc-references)
 nmap <F8>       <Plug>(coc-diagnostic-next)
 nmap <S-F8>     <Plug>(coc-diagnostic-prev-error)
 
-nnoremap tn :tabn<CR>
+nnoremap tn :tabNext<CR>
 nnoremap tp :tabp<CR>
 
 
 
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+"autocmd FileType c ClangFormatAutoEnabl
+"autocmd FileType cpp ClangFormatAutoEnable
 
 
 call plug#begin('~/.vim/plugged')
@@ -101,6 +103,25 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'preservim/nerdtree'
     Plug 'rhysd/vim-clang-format'
-
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
+
+ 
+
+call coc#config('languageserver', {
+            \"ccls": {
+            \  "command": "ccls",
+            \  "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            \  "rootPatterns": [".ccls", "compile_commands.json"],
+            \  "initializationOptions": {
+            \    "cache": {
+            \      "directory": ".ccls-cache"
+            \    },
+            \  }
+            \}
+            \})
+
+
+let g:airline_theme='onedark'
