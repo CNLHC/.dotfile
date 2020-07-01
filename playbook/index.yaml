@@ -1,0 +1,77 @@
+- hosts: 127.0.0.1
+  connection: local
+  remote_user: root
+  become: yes
+  become_user: cn
+  tasks: 
+    - name: set ustc mirror
+      apt_repository:
+        repo: deb http://mirrors.ustc.edu.cn/debian/ unstable main contrib non-free
+        state: present
+
+    - name: install necessary packages
+      apt:
+        pkg:
+          - curl
+          - git
+          - build-essential
+          - neovim
+          - zsh
+
+    - name: take care of nvim settings
+      file:
+        path: ~/.config/nvim 
+        state: directory
+
+    - name: install vim-plug plugin
+      uri:
+        url: https://code.cnworkshop.xyz:6443/snippets/2/raw
+        dest: ~/.local/share/nvim/site/autoload/plug.vim
+
+    - name: check if rules file exists
+      stat: 
+        path: ~/.oh-my-zsh
+      register: zsh_stat
+
+    - name: get oh-my-zsh install script
+      when: zsh_stat.stat.exists == false
+      uri:
+        url: https://code.cnworkshop.xyz:6443/snippets/3/raw?inline=false
+        dest: /tmp/install-zsh.sh
+        mode: 0755
+
+
+    - name: install oh-my-zsh
+      when: zsh_stat.stat.exists == false
+      shell: /tmp/install-zsh.sh
+            
+
+    - name: change zsh file content
+      replace:
+        path: ~/.zshrc 
+        regexp: ^\s*plugins=(\(.*\))\s*$
+        replace: plugins=(git vi-mode)
+
+    - name: create tmux shimming conf
+      lineinfile:
+        state: present 
+        line: source-file ~/.dotfile/tmux/tmux.conf
+        path: ~/.tmux.conf
+        create: yes
+
+    - name: create vim shimming conf
+      lineinfile:
+        state: present 
+        line: source ~/.dotfile/vim/vimrc
+        path: ~/.vimrc
+        create: yes
+
+    - name: append extra config to zshrc
+      blockinfile:
+        state: present 
+        block: |
+          source ~/.dotfile/zsh/alias.zsh
+          source ~/.dotfile/zsh/patch.zsh
+        path: ~/.zshrc
+
+
