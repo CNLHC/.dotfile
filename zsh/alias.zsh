@@ -4,6 +4,10 @@ alias source_conf="source ~/.zshrc"
 alias edit_zshrc="vim ~/.zshrc"
 alias vim=nvim
 
+bindkey \"^P\" up-line-or-beginning-search
+bindkey \"^N\" down-line-or-beginning-search
+
+
 function kill_by_grep {
      ps -aux | grep  $1 | tr -s ' '| cut -d ' ' -f2 | xargs kill -9 ;
 }
