@@ -4,12 +4,16 @@
   become: yes
   become_user: cn
   tasks: 
-    - name: set ustc mirror
+
+    - name: set debian mirror
+      when: ansible_distribution == 'Debian'
       apt_repository:
         repo: deb http://mirrors.ustc.edu.cn/debian/ unstable main contrib non-free
         state: present
 
+
     - name: install necessary packages
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
       apt:
         pkg:
           - curl
