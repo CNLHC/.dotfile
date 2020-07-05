@@ -1,0 +1,15 @@
+
+- name: find aliyun mirror
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  lineinfile: 
+    name: /etc/apt/sources.list
+    regexp: ^.*mirrors.cloud.aliyuncs.com.*$
+    state: absent
+  check_mode: yes
+  register: aliyun_detected
+
+- name: set debian mirror
+  when: ansible_distribution == 'Debian' and  not aliyun_detected.changed
+  apt_repository:
+    repo: deb http://mirrors.ustc.edu.cn/debian/ unstable main contrib non-free
+    state: present

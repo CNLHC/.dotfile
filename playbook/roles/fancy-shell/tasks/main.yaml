@@ -1,0 +1,77 @@
+- name: install necessary packages
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt:
+    pkg:
+      - curl
+      - git
+      - build-essential
+      - neovim
+      - zsh
+      - tmux
+
+
+- name: make sure we have folder to store vim-plug
+  file:
+    path: ~/.local/share/nvim/site/autoload
+    state: directory
+
+- name: install vim-plug plugin
+  uri:
+    url: "{{ vimplug_url }}"
+    dest: ~/.local/share/nvim/site/autoload/plug.vim
+
+- name: check if oh-my-zsh folder exists
+  stat: 
+    path: ~/.oh-my-zsh
+  register: zsh_stat
+
+- name: get oh-my-zsh install script
+  when: zsh_stat.stat.exists == false
+  uri:
+    url: "{{ ohmuzsh_url }}"
+    dest: /tmp/install-zsh.sh
+    mode: 0755
+
+- name: install oh-my-zsh
+  when: zsh_stat.stat.exists == false
+  shell: /tmp/install-zsh.sh
+
+- name: change zsh file content
+  replace:
+    dest: ~/.zshrc 
+    regexp: ^\s*plugins=(\(.*\))\s*$
+    replace: plugins=(git vi-mode)
+
+- name: create tmux shimming conf
+  lineinfile:
+    state: present 
+    line: source-file ~/.dotfile/tmux/tmux.conf
+    dest: ~/.tmux.conf
+    create: yes
+
+- name: take care of nvim settings
+  file:
+    path: ~/.config/nvim 
+    state: directory
+
+- name: create nvim shimming conf
+  lineinfile:
+    state: present 
+    line: source ~/.dotfile/vim/vimrc
+    dest: ~/.config/nvim/init.vim
+    create: yes
+
+- name: create vim shimming conf
+  lineinfile:
+    state: present 
+    line: source ~/.dotfile/vim/vimrc
+    dest: ~/.vimrc
+    create: yes
+
+- name: append extra config to zshrc
+  blockinfile:
+    state: present 
+    block: |
+      source ~/.dotfile/zsh/alias.zsh
+      source ~/.dotfile/zsh/patch.zsh
+    dest: ~/.zshrc

@@ -3,90 +3,14 @@
   remote_user: root
   become: yes
   become_user: cn
-  tasks: 
-    - name: find aliyun mirror
-      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-      lineinfile: 
-        name: /etc/apt/sources.list
-        regexp: ^.*mirrors.cloud.aliyuncs.com.*$
-        state: absent
-      check_mode: yes
-      register: aliyun_detected
+  roles:
+    - mirrors
+    - fancy-shell
 
 
-    - name: set debian mirror
-      when: ansible_distribution == 'Debian' and  not aliyun_detected.changed
-      apt_repository:
-        repo: deb http://mirrors.ustc.edu.cn/debian/ unstable main contrib non-free
-        state: present
-
-    - name: install necessary packages
-      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-      apt:
-        pkg:
-          - curl
-          - git
-          - build-essential
-          - neovim
-          - zsh
-
-    - name: take care of nvim settings
-      file:
-        path: ~/.config/nvim 
-        state: directory
-
-    - name: make sure we have folder to store vim-plug
-      file:
-        path: ~/.local/share/nvim/site/autoload
-        state: directory
-
-    - name: install vim-plug plugin
-      uri:
-        url: https://code.cnworkshop.xyz:6443/snippets/2/raw
-        dest: ~/.local/share/nvim/site/autoload/plug.vim
-
-    - name: check if rules file exists
-      stat: 
-        path: ~/.oh-my-zsh
-      register: zsh_stat
-
-    - name: get oh-my-zsh install script
-      when: zsh_stat.stat.exists == false
-      uri:
-        url: https://code.cnworkshop.xyz:6443/snippets/3/raw?inline=false
-        dest: /tmp/install-zsh.sh
-        mode: 0755
-
-    - name: install oh-my-zsh
-      when: zsh_stat.stat.exists == false
-      shell: /tmp/install-zsh.sh
             
-    - name: change zsh file content
-      replace:
-        dest: ~/.zshrc 
-        regexp: ^\s*plugins=(\(.*\))\s*$
-        replace: plugins=(git vi-mode)
 
-    - name: create tmux shimming conf
-      lineinfile:
-        state: present 
-        line: source-file ~/.dotfile/tmux/tmux.conf
-        dest: ~/.tmux.conf
-        create: yes
 
-    - name: create vim shimming conf
-      lineinfile:
-        state: present 
-        line: source ~/.dotfile/vim/vimrc
-        dest: ~/.vimrc
-        create: yes
 
-    - name: append extra config to zshrc
-      blockinfile:
-        state: present 
-        block: |
-          source ~/.dotfile/zsh/alias.zsh
-          source ~/.dotfile/zsh/patch.zsh
-        dest: ~/.zshrc
 
 
