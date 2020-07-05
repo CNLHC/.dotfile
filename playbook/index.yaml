@@ -4,13 +4,21 @@
   become: yes
   become_user: cn
   tasks: 
+    - name: find aliyun mirror
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      lineinfile: 
+        name: /etc/apt/sources.list
+        regexp: ^.*mirrors.cloud.aliyuncs.com.*$
+        state: absent
+      check_mode: yes
+      register: aliyun_detected
+
 
     - name: set debian mirror
-      when: ansible_distribution == 'Debian'
+      when: ansible_distribution == 'Debian' and  not aliyun_detected.changed
       apt_repository:
         repo: deb http://mirrors.ustc.edu.cn/debian/ unstable main contrib non-free
         state: present
-
 
     - name: install necessary packages
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
@@ -25,6 +33,11 @@
     - name: take care of nvim settings
       file:
         path: ~/.config/nvim 
+        state: directory
+
+    - name: make sure we have folder to store vim-plug
+      file:
+        path: ~/.local/share/nvim/site/autoload
         state: directory
 
     - name: install vim-plug plugin
@@ -44,15 +57,13 @@
         dest: /tmp/install-zsh.sh
         mode: 0755
 
-
     - name: install oh-my-zsh
       when: zsh_stat.stat.exists == false
       shell: /tmp/install-zsh.sh
             
-
     - name: change zsh file content
       replace:
-        path: ~/.zshrc 
+        dest: ~/.zshrc 
         regexp: ^\s*plugins=(\(.*\))\s*$
         replace: plugins=(git vi-mode)
 
@@ -60,14 +71,14 @@
       lineinfile:
         state: present 
         line: source-file ~/.dotfile/tmux/tmux.conf
-        path: ~/.tmux.conf
+        dest: ~/.tmux.conf
         create: yes
 
     - name: create vim shimming conf
       lineinfile:
         state: present 
         line: source ~/.dotfile/vim/vimrc
-        path: ~/.vimrc
+        dest: ~/.vimrc
         create: yes
 
     - name: append extra config to zshrc
@@ -76,6 +87,6 @@
         block: |
           source ~/.dotfile/zsh/alias.zsh
           source ~/.dotfile/zsh/patch.zsh
-        path: ~/.zshrc
+        dest: ~/.zshrc
 
 
