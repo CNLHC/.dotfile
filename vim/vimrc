@@ -85,6 +85,7 @@ nmap gi         <Plug>(coc-implementation)
 nmap gd         <Plug>(coc-definition)
 nmap gl         <Plug>(coc-declaration)     
 nmap gr         <Plug>(coc-references)     
+nmap gh         <Plug>(coc-type-definition)     
 nmap <F8>       <Plug>(coc-diagnostic-next)
 nmap <S-F8>     <Plug>(coc-diagnostic-prev-error)
 
@@ -105,6 +106,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'rhysd/vim-clang-format'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
