@@ -1,0 +1,7 @@
+- name: install nodejs and npm
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt:
+    pkg:
+      - nodejs
+      - npm
+

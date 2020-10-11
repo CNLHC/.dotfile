@@ -3,9 +3,10 @@
   remote_user: root
   become: yes
   ## need to set before running ansible!
-  become_user: user_of_local_machine
+  become_user: root
+  #user_of_local_machine
   roles:
     - mirrors
     - fancy-shell
     - golang
-
+    - node
