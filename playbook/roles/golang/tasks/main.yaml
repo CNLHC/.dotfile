@@ -1,0 +1,33 @@
+- name: check if golang bin exists
+  command: go version
+  register: go_exist
+  ignore_errors: yes
+
+- name: make sure golang_archive has directory
+  file:
+    path: "{{ go_destdir }}"
+    state: directory
+
+- name: check if golang archive downloaded
+  command: ls "{{ go_destdir }}{{ go_artifact }}"
+  register: goarchive_exist
+  ignore_errors: yes
+
+- name: download golang archive
+  when: go_exist.rc != 0 and goarchive_exist.rc != 0
+  uri:
+    url: "{{ go_download_url }}"
+    dest: "{{ go_destdir }}"
+
+- name: unarchive the golang file downloaded
+  unarchive: 
+    src: "{{ go_destdir }}{{ go_artifact }}"
+    dest: /usr/local/
+
+- name: set go_var gopath goproxy goroot
+  lineinfile:
+    state: present 
+    line: source ~/.dotfile/golang/golang.path
+    dest: ~/.zshrc
+    create: yes
+
