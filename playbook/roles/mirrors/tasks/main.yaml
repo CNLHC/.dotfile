@@ -11,5 +11,5 @@
 - name: set debian mirror
   when: ansible_distribution == 'Debian' and  not aliyun_detected.changed
   apt_repository:
-    repo: deb http://mirrors.ustc.edu.cn/debian/ unstable main contrib non-free
+    repo: deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
     state: present
