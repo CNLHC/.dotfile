@@ -8,5 +8,5 @@ Don't READ ME
 5. run ansible after setting userName and roles mannually in ***index.yaml***
 6. set npm source
 7. in vim command mode `:PlugInstall` to install coc-plugin
-8. bind to zsh with `chsh -s zsh`
+8. bind to zsh with `chsh -s \`which zsh\``
 
