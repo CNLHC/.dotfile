@@ -1,0 +1,8 @@
+- name: install nodejs and npm
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  apt:
+    pkg:
+      # Will Install 10.19 on Ubuntu20.04 ; 12.xx on Debian10
+      - nodejs
+      - npm
+

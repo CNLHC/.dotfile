@@ -9,7 +9,6 @@
       - zsh
       - tmux
 
-
 - name: make sure we have folder to store vim-plug
   file:
     path: ~/.local/share/nvim/site/autoload
@@ -28,7 +27,7 @@
 - name: get oh-my-zsh install script
   when: zsh_stat.stat.exists == false
   uri:
-    url: "{{ ohmuzsh_url }}"
+    url: "{{ ohmyzsh_url }}"
     dest: /tmp/install-zsh.sh
     mode: 0755
 
