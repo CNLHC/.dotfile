@@ -8,7 +8,8 @@
       - neovim
       - zsh
       - tmux
-
+      - nodejs
+      - npm
 
 - name: make sure we have folder to store vim-plug
   file:
