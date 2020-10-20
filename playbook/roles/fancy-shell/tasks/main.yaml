@@ -1,4 +1,5 @@
 - name: install necessary packages
+  become: yes
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   apt:
     pkg:
@@ -8,8 +9,6 @@
       - neovim
       - zsh
       - tmux
-      - nodejs
-      - npm
 
 - name: make sure we have folder to store vim-plug
   file:
@@ -61,6 +60,12 @@
     line: source ~/.dotfile/vim/vimrc
     dest: ~/.config/nvim/init.vim
     create: yes
+
+- name: create coc shimming conf
+  file:
+    src: ~/.dotfile/vim/coc-settings.json
+    dest: ~/.config/nvim/coc-settings.json
+    state: link
 
 - name: create vim shimming conf
   lineinfile:

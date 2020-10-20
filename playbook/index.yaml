@@ -1,12 +1,6 @@
 - hosts: 127.0.0.1
   connection: local
-  remote_user: cn
-  become: yes
-  ## need to set before running ansible!
   become_user: root
-  #user_of_local_machine
   roles:
     - mirrors
     - fancy-shell
-    - golang
-    - node

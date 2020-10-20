@@ -1,0 +1,48 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": [
+        "javascript",
+        "javascriptreact",
+        "css",
+        "scala",
+        "json",
+        "rust",
+        "go"
+    ],
+    "languageserver": {
+        "svls": {
+            "command": "svls",
+            "args": [
+                "-d"
+            ],
+            "rootPatterns": [
+                ".svls.toml"
+            ],
+            "filetypes": [
+                "verilog",
+                "systemverilog"
+            ]
+        },
+        "ccls": {
+            "command": "ccls",
+            "args": [
+                "-v=2"
+            ],
+            "filetypes": [
+                "cpp",
+                "c",
+                "cuda",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": ".ccls-cache"
+                }
+            }
+        }
+    }
+}

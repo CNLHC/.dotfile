@@ -9,85 +9,42 @@ set expandtab
 set modelines=0		
 set cursorline
 set cursorcolumn
-colorscheme desert
-
-" Rename tabs to show tab number.
-" (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
-if exists("+showtabline")
-    function! MyTabLine()
-        let s = ''
-        let wn = ''
-        let t = tabpagenr()
-        let i = 1
-        while i <= tabpagenr('$')
-            let buflist = tabpagebuflist(i)
-            let winnr = tabpagewinnr(i)
-            let s .= '%' . i . 'T'
-            let s .= (i == t ? '%1*' : '%2*')
-            let s .= ' '
-            let wn = tabpagewinnr(i,'$')
-
-            let s .= '%#TabNum#'
-            let s .= i
-            " let s .= '%*'
-            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-            let bufnr = buflist[winnr - 1]
-            let file = bufname(bufnr)
-            let buftype = getbufvar(bufnr, 'buftype')
-            if buftype == 'nofile'
-                if file =~ '\/.'
-                    let file = substitute(file, '.*\/\ze.', '', '')
-                endif
-            else
-                let file = fnamemodify(file, ':p:t')
-            endif
-            if file == ''
-                let file = '[No Name]'
-            endif
-            let s .= ' ' . file . ' '
-            let i = i + 1
-        endwhile
-        let s .= '%T%#TabLineFill#%='
-        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-        return s
-    endfunction
-    set stal=2
-    set tabline=%!MyTabLine()
-    set showtabline=1
-    highlight link TabNum Special
-endif
-
-set tabline=%!MyTabLine()
-
 " hybrid absolute and relative line number
 set nu rnu
 set foldmethod=indent
 set helpheight=40
-
 set background=dark
+
+colorscheme desert
+
 syntax on
 filetype on
 
 autocmd! bufwritepost vimrc source ~/.dotfile/vim/vimrc
-source ~/.dotfile/vim/preference/plugin.vim
+
 
 let mapleader= '\'
 map <F5> :call Compile()<CR>
 map <F6> :call Run()<CR>
 map <F7> :call Debug()<CR>
 
-nnoremap <silent> <leader>ee :e ~/.dotfile/vim/vimrc <CR>
-nnoremap <silent> <leader>ep :e ~/.dotfile/vim/preference/plugin.vim <CR>
-nnoremap <leader>w :w<CR>
-nnoremap <leader>c :call Compile()<CR><CR>:call Run()<CR>
+
+nmap <silent> <leader>ee :e ~/.dotfile/vim/vimrc <CR>
+nmap <silent> <leader>ep :e ~/.dotfile/vim/preference/plugin.vim <CR>
+
+nmap <leader>w :w<CR>
+nmap <leader>c :call Compile()<CR><CR>:call Run()<CR>
 
 nmap gi         <Plug>(coc-implementation)
 nmap gd         <Plug>(coc-definition)
 nmap gl         <Plug>(coc-declaration)     
 nmap gr         <Plug>(coc-references)     
-nmap gh         <Plug>(coc-type-definition)     
+nmap <leader>f  <Plug>(coc-format-selected)
 nmap <F8>       <Plug>(coc-diagnostic-next)
 nmap <S-F8>     <Plug>(coc-diagnostic-prev-error)
+nmap <leader>qf <Plug>(coc-fix-current)
+nmap gh         :call CocAction('doHover') <CR>
+nmap <C-S-i>    :call CocAction('format') <CR>
 
 nnoremap tn :tabNext<CR>
 nnoremap tp :tabp<CR>
@@ -100,30 +57,18 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 
 call plug#begin('~/.vim/plugged')
-
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'preservim/nerdtree'
     Plug 'rhysd/vim-clang-format'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'christoomey/vim-tmux-navigator'
-
+    Plug 'tpope/vim-fugitive'
 call plug#end()
 
- 
+source ~/.dotfile/vim/preference/plugin.vim
+source ~/.dotfile/vim/preference/misc.vim
 
-call coc#config('languageserver', {
-            \"ccls": {
-            \  "command": "ccls",
-            \  "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-            \  "rootPatterns": [".ccls", "compile_commands.json"],
-            \  "initializationOptions": {
-            \    "cache": {
-            \      "directory": ".ccls-cache"
-            \    },
-            \  }
-            \}
-            \})
 
 
 let g:airline_theme='onedark'
