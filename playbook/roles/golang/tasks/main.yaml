@@ -30,6 +30,7 @@
     state: directory
 
 - name: unarchive the golang file downloaded
+  when: go_exist.stat.exists == false 
   unarchive: 
     src: "{{ go_destdir }}{{ go_artifact }}"
     dest: ~/.bin/
