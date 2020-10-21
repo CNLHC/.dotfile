@@ -42,6 +42,20 @@
     regexp: ^\s*plugins=(\(.*\))\s*$
     replace: plugins=(git vi-mode)
 
+- name: install tpm
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    update: "{{ update }}"
+
+- name: download fzf
+  git:
+    repo: https://github.com/junegunn/fzf
+    dest: ~/.fzf
+
+- name: install fzf
+  command: bash ~/.fzf/install
+
 - name: create tmux shimming conf
   lineinfile:
     state: present 
@@ -53,6 +67,7 @@
   file:
     path: ~/.config/nvim 
     state: directory
+
 
 - name: create nvim shimming conf
   lineinfile:
