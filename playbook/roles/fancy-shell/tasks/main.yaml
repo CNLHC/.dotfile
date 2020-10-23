@@ -17,6 +17,7 @@
 
 - name: install vim-plug plugin
   uri:
+    status_code: [304,200]
     url: "{{ vimplug_url }}"
     dest: ~/.local/share/nvim/site/autoload/plug.vim
 
@@ -28,6 +29,7 @@
 - name: get oh-my-zsh install script
   when: zsh_stat.stat.exists == false
   uri:
+    status_code: [304,200]
     url: "{{ ohmyzsh_url }}"
     dest: /tmp/install-zsh.sh
     mode: 0755
@@ -52,6 +54,7 @@
   git:
     repo: https://github.com/junegunn/fzf
     dest: ~/.fzf
+    update: "{{ update }}"
 
 - name: install fzf
   command: bash ~/.fzf/install
