@@ -3,6 +3,7 @@ alias edit_alias="vim ~/.dotfile/zsh/alias.zsh"
 alias source_conf="source ~/.zshrc"
 alias edit_zshrc="vim ~/.zshrc"
 alias vim=nvim
+alias t='tmux new-session -A -s main'
 
 bindkey \"^P\" up-line-or-beginning-search
 bindkey \"^N\" down-line-or-beginning-search
