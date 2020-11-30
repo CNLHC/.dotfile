@@ -1,0 +1,49 @@
+- name: download v2ray_zip
+  get_url:
+    dest: /tmp/v2ray.zip
+    url: "{{ v2ray_download_url }}"
+
+- name : create folder
+  file:
+    state: directory
+    path: /opt/v2ray
+
+- name: unarchive the zip
+  unarchive:
+    src: /tmp/v2ray.zip
+    dest: /opt/v2ray/
+    remote_src: true
+
+- name: modify exec location
+  replace:
+    dest: /opt/v2ray/systemd/system/v2ray.service
+    regexp: "ExecStart(.*)config.json"
+    replace: "ExecStart=/opt/v2ray/v2ray -config /etc/v2ray/config.json"
+
+- name: cp systemd file
+  copy:
+    src: /opt/v2ray/systemd/system/v2ray.service/
+    dest: /etc/systemd/network/
+    
+- name: enable service
+  systemd:
+    name: v2ray
+    state: restarted
+    
+
+
+    
+    
+    
+
+
+  
+  
+
+
+
+
+      
+
+
+
