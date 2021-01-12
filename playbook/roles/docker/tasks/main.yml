@@ -1,0 +1,14 @@
+- name:  install docker for debian based systems
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  include: debian.yml
+  
+  
+  
+
+
+  
+  
+  
+  
+  
+
