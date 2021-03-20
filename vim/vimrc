@@ -64,6 +64,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline-themes'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'tpope/vim-fugitive'
+    Plug 'chr4/nginx.vim'
 call plug#end()
 
 source ~/.dotfile/vim/preference/plugin.vim
