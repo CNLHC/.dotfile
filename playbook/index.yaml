@@ -5,3 +5,4 @@
   roles:
     - mirrors
     - fancy-shell
+    - docker
