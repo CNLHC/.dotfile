@@ -1,0 +1,29 @@
+- name: install required packages
+  apt:
+    pkg:
+     - apt-transport-https 
+     - ca-certificates 
+     - curl 
+     - gnupg2 
+     - software-properties-common
+
+- name: add gpg key of docker
+  apt_key:
+    url:  https://download.docker.com/linux/debian/gpg
+
+- name: add repo of docker
+  apt_repository:
+    repo: 'deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable'
+    state: present
+
+
+- name: install docker-ce
+  apt:
+    pkg:
+     - docker-ce
+
+
+
+    
+    
+

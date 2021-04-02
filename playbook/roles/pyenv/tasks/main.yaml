@@ -1,0 +1,36 @@
+- name: install build essentials
+  become: yes
+  apt:
+    pkg:
+      - build-essential
+      - zlib1g-dev 
+      - libncurses5-dev 
+      - libgdbm-dev 
+      - libnss3-dev 
+      - libssl-dev 
+      - libsqlite3-dev 
+      - libreadline-dev 
+      - libffi-dev 
+      - curl 
+      - libbz2-dev
+
+- name: ensure git proxy 
+  git_config:
+    scope: global
+    name: http.proxy
+    value: "{{socks5_proxy}}"
+  
+- name: download pyenv install sh
+  get_url:
+    dest: /tmp/install-pyenv.sh
+    url: "{{ pyenv_download_url }}"
+  environment:
+    ALL_PROXY: "{{socks5_proxy}}"
+
+- name: download pyenv install sh
+  shell:
+    dest: /tmp/install-pyenv.sh
+    url: "{{ pyenv_download_url }}"
+    
+
+

@@ -57,6 +57,8 @@
     update: "{{ update }}"
 
 - name: install fzf
+  environment:
+   ALL_PROXY: socks5h://bridge.cnworkshop.xyz:1280
   command: bash ~/.fzf/install
 
 - name: create tmux shimming conf
