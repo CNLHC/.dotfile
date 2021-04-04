@@ -73,3 +73,5 @@ source ~/.dotfile/vim/preference/misc.vim
 
 
 let g:airline_theme='onedark'
+
+

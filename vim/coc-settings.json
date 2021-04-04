@@ -8,6 +8,12 @@
         "rust",
         "go"
     ],
+    "yaml.schemas": {
+        "http://publicstatic.cnworkshop.xyz/compose-spec.json": [
+            "docker-compose.yaml",
+            "docker-compose.yml"
+        ]
+    },
     "languageserver": {
         "svls": {
             "command": "svls",
