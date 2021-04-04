@@ -1,7 +1,23 @@
-- name: install nodejs and npm
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  apt:
-    pkg:
-      - nodejs
-      - npm
+- name: download nodejs
+  get_url:
+    dest: /tmp/nodejs.tar.xz
+    url: "{{ node_download_url }}"
+
+
+- name: unarchive node js
+  become: true
+  unarchive:
+    src: /tmp/nodejs.tar.xz
+    dest: /opt/
+    remote_src: true
+  
+  
+- name: append extra config to zshrc
+  blockinfile:
+    state: present 
+    marker: '#load nodejs path'
+    block: |
+      PATH=${PATH}:/opt/{{ node_version }}/bin/
+    dest: ~/.zshrc
+
 

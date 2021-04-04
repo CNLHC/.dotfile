@@ -97,6 +97,7 @@
 - name: append extra config to zshrc
   blockinfile:
     state: present 
+    marker: '#extra-zsh-config'
     block: |
       source ~/.dotfile/zsh/alias.zsh
       source ~/.dotfile/zsh/patch.zsh
