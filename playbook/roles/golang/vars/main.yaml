@@ -1,5 +1,5 @@
 ## Configurable
-go_artifact: go1.15.2.linux-amd64.tar.gz
+go_artifact: go1.16.3.linux-amd64.tar.gz
 go_binary_base: https://mirrors.ustc.edu.cn/golang/
 
 ## Fixed
