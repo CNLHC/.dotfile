@@ -12,7 +12,14 @@
         "http://publicstatic.cnworkshop.xyz/compose-spec.json": [
             "docker-compose.yaml",
             "docker-compose.yml"
-        ]
+        ],
+        "http://publicstatic.cnworkshop.xyz/schema/v1.18.1-standalone-strict/all.json": "*.k8s.yml"
+    },
+    "yaml.completion": true,
+    "yaml.validate": true,
+    "yaml.trace.server": "verbose",
+    "diagnostic-languageserver.filetypes": {
+        "sh": "shellcheck"
     },
     "languageserver": {
         "svls": {
