@@ -6,7 +6,6 @@
       - curl
       - git
       - build-essential
-      - neovim
       - zsh
       - tmux
 
@@ -102,3 +101,33 @@
       source ~/.dotfile/zsh/alias.zsh
       source ~/.dotfile/zsh/patch.zsh
     dest: ~/.zshrc
+
+
+- name: download nvim
+  get_url:
+    dest: /tmp/nvim-linux64.tar.gz
+    url: "{{ nvim_download_url }}"
+
+
+- name: unarchive nvim
+  become: true
+  unarchive:
+    src: /tmp/nvim-linux64.tar.gz
+    dest: /tmp/
+    remote_src: true
+
+- name: install nvim
+  become: true
+  synchronize:
+    src: /tmp/nvim-linux64/
+    dest: /usr/share/
+  
+
+  
+  
+
+
+
+
+
+

@@ -1,7 +1,13 @@
+- name: stat node
+  stat:
+    path: /opt/{{ node_version }}/bin/
+  register: node_stat
+
 - name: download nodejs
   get_url:
     dest: /tmp/nodejs.tar.xz
     url: "{{ node_download_url }}"
+  when: not node_stat.stat.exists
 
 
 - name: unarchive node js
@@ -10,7 +16,10 @@
     src: /tmp/nodejs.tar.xz
     dest: /opt/
     remote_src: true
+  when: not node_stat.stat.exists
   
+
+    
   
 - name: append extra config to zshrc
   blockinfile:
@@ -19,5 +28,6 @@
     block: |
       PATH=${PATH}:/opt/{{ node_version }}/bin/
     dest: ~/.zshrc
+  when: not node_stat.stat.exists
 
 
