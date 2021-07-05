@@ -104,6 +104,7 @@
 
 
 - name: download nvim
+  when: " ansible_system  == 'Linux'"
   get_url:
     dest: /tmp/nvim-linux64.tar.gz
     url: "{{ nvim_download_url }}"
@@ -111,6 +112,7 @@
 
 - name: unarchive nvim
   become: true
+  when: " ansible_system  == 'Linux'"
   unarchive:
     src: /tmp/nvim-linux64.tar.gz
     dest: /tmp/
@@ -118,6 +120,7 @@
 
 - name: install nvim
   become: true
+  when: " ansible_system  == 'Linux' "
   synchronize:
     src: /tmp/nvim-linux64/
     dest: /usr/share/
