@@ -3,134 +3,24 @@
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   apt:
     pkg:
+      - build-essential
       - curl
       - git
-      - build-essential
       - zsh
       - tmux
 
-- name: make sure we have folder to store vim-plug
-  file:
-    path: ~/.local/share/nvim/site/autoload
-    state: directory
+- name: zsh settings
+  include: zsh.yaml
 
-- name: install vim-plug plugin
-  uri:
-    status_code: [304,200]
-    url: "{{ vimplug_url }}"
-    dest: ~/.local/share/nvim/site/autoload/plug.vim
+- name: nvim settings
+  include: nvim.yaml
 
-- name: check if oh-my-zsh folder exists
-  stat: 
-    path: ~/.oh-my-zsh
-  register: zsh_stat
+- name: tmux settings
+  include: tmux.yaml
 
-- name: get oh-my-zsh install script
-  when: zsh_stat.stat.exists == false
-  uri:
-    status_code: [304,200]
-    url: "{{ ohmyzsh_url }}"
-    dest: /tmp/install-zsh.sh
-    mode: 0755
+- name: k8s utilities
+  when: kubernetes
+  include: k8s.yaml
 
-- name: install oh-my-zsh
-  when: zsh_stat.stat.exists == false
-  shell: /tmp/install-zsh.sh
-
-- name: change zsh file content
-  replace:
-    dest: ~/.zshrc 
-    regexp: ^\s*plugins=(\(.*\))\s*$
-    replace: plugins=(git vi-mode)
-
-- name: install tpm
-  git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: ~/.tmux/plugins/tpm
-    update: "{{ update }}"
-
-- name: download fzf
-  git:
-    repo: https://github.com/junegunn/fzf
-    dest: ~/.fzf
-    update: "{{ update }}"
-
-- name: install fzf
-  environment:
-   ALL_PROXY: socks5h://bridge.cnworkshop.xyz:1280
-  command: bash ~/.fzf/install
-
-- name: create tmux shimming conf
-  lineinfile:
-    state: present 
-    line: source-file ~/.dotfile/tmux/tmux.conf
-    dest: ~/.tmux.conf
-    create: yes
-
-- name: take care of nvim settings
-  file:
-    path: ~/.config/nvim 
-    state: directory
-
-
-- name: create nvim shimming conf
-  lineinfile:
-    state: present 
-    line: source ~/.dotfile/vim/vimrc
-    dest: ~/.config/nvim/init.vim
-    create: yes
-
-- name: create coc shimming conf
-  file:
-    src: ~/.dotfile/vim/coc-settings.json
-    dest: ~/.config/nvim/coc-settings.json
-    state: link
-
-- name: create vim shimming conf
-  lineinfile:
-    state: present 
-    line: source ~/.dotfile/vim/vimrc
-    dest: ~/.vimrc
-    create: yes
-
-- name: append extra config to zshrc
-  blockinfile:
-    state: present 
-    marker: '#extra-zsh-config'
-    block: |
-      source ~/.dotfile/zsh/alias.zsh
-      source ~/.dotfile/zsh/patch.zsh
-    dest: ~/.zshrc
-
-
-- name: download nvim
-  when: " ansible_system  == 'Linux'"
-  get_url:
-    dest: /tmp/nvim-linux64.tar.gz
-    url: "{{ nvim_download_url }}"
-
-
-- name: unarchive nvim
-  become: true
-  when: " ansible_system  == 'Linux'"
-  unarchive:
-    src: /tmp/nvim-linux64.tar.gz
-    dest: /tmp/
-    remote_src: true
-
-- name: install nvim
-  become: true
-  when: " ansible_system  == 'Linux' "
-  synchronize:
-    src: /tmp/nvim-linux64/
-    dest: /usr/share/
-  
-
-  
-  
-
-
-
-
-
-
+- name: powerline
+  include: powerline.yaml

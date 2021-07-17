@@ -1,0 +1,61 @@
+- name: check if oh-my-zsh folder exists
+  stat: 
+    path: ~/.oh-my-zsh
+  register: zsh_stat
+
+
+- name: get oh-my-zsh install script
+  when: zsh_stat.stat.exists == false
+  uri:
+    status_code: [304,200]
+    url: "{{ ohmyzsh_url }}"
+    dest: /tmp/install-zsh.sh
+    mode: 0755
+
+- name: install oh-my-zsh
+  when: zsh_stat.stat.exists == false
+  shell: /tmp/install-zsh.sh
+
+- name: add default oh-my-zsh plugins
+  replace:
+    dest: ~/.zshrc 
+    regexp: ^\s*plugins=(\(.*\))\s*$
+    replace: plugins=(git vi-mode golang jump)
+
+- name: append extra config to zshrc
+  blockinfile:
+    state: present 
+    marker: '#extra-zsh-config {mark}'
+    block: |
+      source ~/.dotfile/zsh/alias.zsh
+      source ~/.dotfile/zsh/patch.zsh
+    dest: ~/.zshrc
+
+
+- name: Check is fzf installed
+  shell: command -v  fzf >/dev/null 2>&1
+  register: is_fzf_exists
+  ignore_errors: yes
+
+  
+- name: download fzf
+  when: is_fzf_exists.rc == 1
+  git:
+    repo: https://github.com/junegunn/fzf
+    dest: ~/.fzf
+    update: "{{ update }}"
+
+- name: install fzf
+  when: is_fzf_exists.rc == 1
+  environment:
+   ALL_PROXY: socks5h://bridge.cnworkshop.xyz:1280
+  command: bash ~/.fzf/install
+
+- name: download zsh-autocompletions
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions 
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    update: false
+
+
+

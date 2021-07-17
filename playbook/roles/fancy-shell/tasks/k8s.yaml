@@ -1,0 +1,15 @@
+- name: append extra config to zshrc
+  blockinfile:
+    state: present 
+    marker: '#kubernetes plugin {mark}'
+    insertafter: ^\s*plugins=(\(.*\))\s*$
+    block: |
+      plugins+=(kubectl kube-ps1)
+    dest: ~/.zshrc
+
+- name: install kubectx
+  become: yes
+  when: ansible_distribution == 'Debian' 
+  apt:
+    pkg:
+      - kubectx
