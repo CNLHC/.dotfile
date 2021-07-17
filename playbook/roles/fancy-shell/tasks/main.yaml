@@ -1,3 +1,10 @@
+- name: check git proxy settings
+  failed_when:  socks5_proxy == "" and mainland 
+  debug:
+    msg: "在国内不配github代理，一堆东西都装不了的"
+
+  
+
 - name: install necessary packages
   become: yes
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
@@ -9,6 +16,9 @@
       - zsh
       - tmux
 
+- name: set git proxy 
+  shell: "git config --global http.proxy '{{ socks5_proxy }}'"
+  
 - name: zsh settings
   include: zsh.yaml
 
