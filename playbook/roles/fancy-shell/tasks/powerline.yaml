@@ -10,6 +10,7 @@
     patterns: ^powerline$
 
 - name: Set powerline_root
+  when: powerline_root_reg.matched > 0
   set_fact:
     powerline_root : "{{ powerline_root_reg.files[0].path }}"
 
@@ -19,7 +20,7 @@
   pip:
     state: present
     name: powerline-status
-    extra_args:  --install-option="--prefix=~/.powerline"
+    extra_args:  --prefix=~/.powerline
 
 - name: find powerline root again
   when: powerline_root_reg.matched == 0
@@ -56,23 +57,10 @@
     marker: "#powerline integration #{mark}"
     insertafter: EOF
     path: ~/.zshrc
-    block: "source  {{ powerline_root }}/bindings/zsh/powerline.zsh"
-
-
-
-    
-    
-    
-  
-  
-
-
-
-
-    
-    
-    
-  
-  
-
-
+    block: |
+      export PATH=$PATH:~/.powerline/bin
+      export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:~/.dotfile/
+      export PYTHONPATH=$(dirname {{ powerline_root }})
+      export POWERLINE_COMMAND=powerline
+      export POWERLINE_CONFIG_COMMAND=powerline-config
+      source  {{ powerline_root }}/bindings/zsh/powerline.zsh

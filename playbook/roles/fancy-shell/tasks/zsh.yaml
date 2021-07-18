@@ -20,7 +20,7 @@
   replace:
     dest: ~/.zshrc 
     regexp: ^\s*plugins=(\(.*\))\s*$
-    replace: plugins=(git vi-mode golang jump)
+    replace: plugins=(git vi-mode golang jump  zsh-autosuggestions)
 
 - name: append extra config to zshrc
   blockinfile:
