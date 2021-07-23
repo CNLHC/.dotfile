@@ -37,17 +37,16 @@
 - name: download nvim
   when: 
     - ansible_system  == 'Linux' 
-    - is_nvim_exists.rc == 1
+    - is_nvim_exists.rc != 0
   get_url:
     dest: /tmp/nvim-linux64.tar.gz
     url: "{{ nvim_download_url }}"
-
 
 - name: unarchive nvim
   become: true
   when: 
     - ansible_system  == 'Linux' 
-    - is_nvim_exists.rc == 1
+    - is_nvim_exists.rc != 0
   unarchive:
     src: /tmp/nvim-linux64.tar.gz
     dest: /tmp/
@@ -55,17 +54,22 @@
 
 - name: install nvim
   become: true
-  when: 
-    - ansible_system  == 'Linux' 
-    - is_nvim_exists.rc == 1
+  delegate_to: localhost
+  when:
+    - ansible_system == 'Linux' 
+    - is_nvim_exists.rc != 0
   synchronize:
     src: /tmp/nvim-linux64/
-    dest: /usr/share/
-
-
+    dest: /usr/local
 
 - name: create coc shimming conf
   file:
     src: ~/.dotfile/vim/coc-settings.json
     dest: ~/.config/nvim/coc-settings.json
+    state: link
+
+- name: create nvim bin link
+  file:
+    src: /usr/local/bin/nvim
+    dest: /usr/bin/nvim
     state: link
