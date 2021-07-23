@@ -1,0 +1,20 @@
+{
+	"segments": {
+		"left": [
+			{
+				"function": "powerline.segments.common.env.virtualenv",
+				"priority": 50
+			},
+			{
+				"function": "powerline.segments.shell.cwd",
+				"priority": 10
+			}
+		],
+		"right": [
+			{
+				"function": "powerline.segments.common.net.hostname",
+				"priority": 50
+			}
+		]
+	}
+}
