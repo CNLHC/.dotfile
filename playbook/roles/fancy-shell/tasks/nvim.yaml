@@ -42,11 +42,6 @@
     dest: /tmp/nvim-linux64.tar.gz
     url: "{{ nvim_download_url }}"
 
-- name: make sure we have folder to store nvim
-  file:
-    path: /tmp/nvim_temp
-    state: directory
-
 - name: unarchive nvim
   become: true
   when: 
@@ -54,7 +49,7 @@
     - is_nvim_exists.rc != 0
   unarchive:
     src: /tmp/nvim-linux64.tar.gz
-    dest: /tmp/nvim_temp
+    dest: /tmp/
     remote_src: true
 
 - name: install nvim
@@ -64,8 +59,8 @@
     - ansible_system == 'Linux' 
     - is_nvim_exists.rc != 0
   synchronize:
-    src: /tmp/nvim_temp/
-    dest: /usr/share/
+    src: /tmp/nvim-linux64/
+    dest: /usr/local
 
 - name: create coc shimming conf
   file:
@@ -75,6 +70,6 @@
 
 - name: create nvim bin link
   file:
-    src: /usr/share/nvim-linux64/bin/nvim
+    src: /usr/local/bin/nvim
     dest: /usr/bin/nvim
     state: link
