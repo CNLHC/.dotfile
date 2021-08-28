@@ -10,10 +10,15 @@
     ],
     "yaml.schemas": {
         "http://publicstatic.cnworkshop.xyz/compose-spec.json": [
-            "docker-compose.yaml",
-            "docker-compose.yml"
+            "*/docker-compose.yml",
+            "*/docker-compose.yaml"
+        ],
+        "https://json.schemastore.org/ansible-role-2.9.json": [
+            "**/tasks/*.yaml"
         ]
     },
+    "yaml.schemaStore.enable": true,
+    "yaml.trace.server": "verbose",
     "languageserver": {
         "svls": {
             "command": "svls",
