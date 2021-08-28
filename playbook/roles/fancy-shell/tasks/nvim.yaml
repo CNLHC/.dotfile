@@ -1,0 +1,75 @@
+- name: make sure we have folder to store vim-plug
+  file:
+    path: ~/.local/share/nvim/site/autoload
+    state: directory
+
+- name: install vim-plug plugin
+  uri:
+    status_code: [304,200]
+    url: "{{ vimplug_url }}"
+    dest: ~/.local/share/nvim/site/autoload/plug.vim
+
+- name: take care of nvim settings
+  file:
+    path: ~/.config/nvim 
+    state: directory
+
+
+- name: create nvim shimming conf
+  lineinfile:
+    state: present 
+    line: source ~/.dotfile/vim/vimrc
+    dest: ~/.config/nvim/init.vim
+    create: yes
+
+- name: create vim shimming conf
+  lineinfile:
+    state: present 
+    line: source ~/.dotfile/vim/vimrc
+    dest: ~/.vimrc
+    create: yes
+
+- name: Check is  nvim installed
+  shell: command -v  nvim >/dev/null 2>&1
+  register: is_nvim_exists
+  ignore_errors: yes
+
+- name: download nvim
+  when: 
+    - ansible_system  == 'Linux' 
+    - is_nvim_exists.rc != 0
+  get_url:
+    dest: /tmp/nvim-linux64.tar.gz
+    url: "{{ nvim_download_url }}"
+
+- name: unarchive nvim
+  become: true
+  when: 
+    - ansible_system  == 'Linux' 
+    - is_nvim_exists.rc != 0
+  unarchive:
+    src: /tmp/nvim-linux64.tar.gz
+    dest: /tmp/
+    remote_src: true
+
+- name: install nvim
+  become: true
+  delegate_to: localhost
+  when:
+    - ansible_system == 'Linux' 
+    - is_nvim_exists.rc != 0
+  synchronize:
+    src: /tmp/nvim-linux64/
+    dest: /usr/local
+
+- name: create coc shimming conf
+  file:
+    src: ~/.dotfile/vim/coc-settings.json
+    dest: ~/.config/nvim/coc-settings.json
+    state: link
+
+- name: create nvim bin link
+  file:
+    src: /usr/local/bin/nvim
+    dest: /usr/bin/nvim
+    state: link

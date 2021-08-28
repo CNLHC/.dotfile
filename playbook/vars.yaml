@@ -1,8 +1,13 @@
+
+mainland: true
 pyenv_download_url: https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer
 v2ray_download_url: http://publicstatic.cnworkshop.xyz/latest/v2ray-linux-64.zip
 node_version: node-v14.16.0-linux-x64
 node_download_url: "https://nodejs.org/dist/v14.16.0/{{ node_version }}.tar.xz"
-socks5_proxy: ""
+nvim_download_url: "http://publicstatic.cnworkshop.xyz/latest/nvim-linux64.tar.gz"
+socks5_proxy: "socks5h://bridge.cnworkshop.xyz:1280"
+
+kubernetes: true
 
 
 

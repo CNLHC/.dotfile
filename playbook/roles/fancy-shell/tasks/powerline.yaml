@@ -1,0 +1,66 @@
+- name: find powerline root
+  register: powerline_root_reg
+  find:
+    paths: 
+      - ~/.powerline
+    depth: 4
+    file_type: directory
+    recurse: true
+    use_regex: true
+    patterns: ^powerline$
+
+- name: Set powerline_root
+  when: powerline_root_reg.matched > 0
+  set_fact:
+    powerline_root : "{{ powerline_root_reg.files[0].path }}"
+
+
+- name: install powerline
+  when: powerline_root_reg.matched == 0
+  pip:
+    state: present
+    name: powerline-status
+    extra_args:  --prefix=~/.powerline
+
+- name: find powerline root again
+  when: powerline_root_reg.matched == 0
+  register: powerline_root_reg_2
+  find:
+    paths: 
+      - ~/.powerline
+    depth: 4
+    file_type: directory
+    recurse: true
+    use_regex: true
+    patterns: ^powerline$
+
+- name: must Set powerline_root
+  when: powerline_root_reg.matched == 0
+  failed_when: powerline_root_reg_2.matched == 0
+  set_fact:
+    powerline_root : "{{ powerline_root_reg_2.files[0].path }}"
+
+
+- name: debug
+  debug:
+    msg: "{{powerline_root}}"
+
+- name: integrate with tmux
+  blockinfile:
+    marker: "#powerline integration #{mark}"
+    insertbefore: BOF
+    path: ~/.tmux.conf
+    block: "source-file {{ powerline_root }}/bindings/tmux/powerline.conf"
+
+- name: integrate with zsh
+  blockinfile:
+    marker: "#powerline integration #{mark}"
+    insertafter: EOF
+    path: ~/.zshrc
+    block: |
+      export PATH=$PATH:~/.powerline/bin
+      export XDG_CONFIG_DIRS=$XDG_CONFIG_DIRS:~/.dotfile/
+      export PYTHONPATH=$(dirname {{ powerline_root }})
+      export POWERLINE_COMMAND=powerline
+      export POWERLINE_CONFIG_COMMAND=powerline-config
+      source  {{ powerline_root }}/bindings/zsh/powerline.zsh

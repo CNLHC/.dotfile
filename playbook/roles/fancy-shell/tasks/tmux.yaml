@@ -1,0 +1,12 @@
+- name: install tpm
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    update: "{{ update }}"
+
+- name: create tmux shimming conf
+  lineinfile:
+    state: present 
+    line: source-file ~/.dotfile/tmux/tmux.conf
+    dest: ~/.tmux.conf
+    create: yes

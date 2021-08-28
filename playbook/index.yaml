@@ -4,4 +4,3 @@
   become_method: sudo
   roles:
     - fancy-shell
-    - node
