@@ -34,6 +34,8 @@
   unarchive: 
     src: "{{ go_destdir }}{{ go_artifact }}"
     dest: ~/.bin/
+    remote_src: true
+      
 
 - name: set go_var gopath goproxy goroot
   lineinfile:

@@ -5,26 +5,25 @@
 
 - name: install vim-plug plugin
   uri:
-    status_code: [304,200]
+    status_code: [304, 200]
     url: "{{ vimplug_url }}"
     dest: ~/.local/share/nvim/site/autoload/plug.vim
 
 - name: take care of nvim settings
   file:
-    path: ~/.config/nvim 
+    path: ~/.config/nvim
     state: directory
-
 
 - name: create nvim shimming conf
   lineinfile:
-    state: present 
+    state: present
     line: source ~/.dotfile/vim/vimrc
     dest: ~/.config/nvim/init.vim
     create: yes
 
 - name: create vim shimming conf
   lineinfile:
-    state: present 
+    state: present
     line: source ~/.dotfile/vim/vimrc
     dest: ~/.vimrc
     create: yes
@@ -35,8 +34,8 @@
   ignore_errors: yes
 
 - name: download nvim
-  when: 
-    - ansible_system  == 'Linux' 
+  when:
+    - ansible_system  == 'Linux'
     - is_nvim_exists.rc != 0
   get_url:
     dest: /tmp/nvim-linux64.tar.gz
@@ -44,8 +43,8 @@
 
 - name: unarchive nvim
   become: true
-  when: 
-    - ansible_system  == 'Linux' 
+  when:
+    - ansible_system  == 'Linux'
     - is_nvim_exists.rc != 0
   unarchive:
     src: /tmp/nvim-linux64.tar.gz
@@ -53,11 +52,10 @@
     remote_src: true
 
 - name: install nvim
-  become: true
-  delegate_to: localhost
   when:
-    - ansible_system == 'Linux' 
+    - ansible_system == 'Linux'
     - is_nvim_exists.rc != 0
+  delegate_to: "{{inventory_hostname}}"
   synchronize:
     src: /tmp/nvim-linux64/
     dest: /usr/local

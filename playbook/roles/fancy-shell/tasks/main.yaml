@@ -1,9 +1,10 @@
-- name: check git proxy settings
-  failed_when:  socks5_proxy == "" and mainland 
-  debug:
-    msg: "在国内不配github代理，一堆东西都装不了的"
+- name: set git proxy
+  shell: "git config --global http.proxy '{{ socks5_proxy }}'"
 
-  
+- name: check git proxy settings
+  failed_when: (socks5_proxy == "" and mainland) or (socks5_proxy != "" and  not mainland)
+  debug:
+    msg: "正确配置github代理"
 
 - name: install necessary packages
   become: yes
@@ -16,9 +17,11 @@
       - zsh
       - tmux
 
-- name: set git proxy 
-  shell: "git config --global http.proxy '{{ socks5_proxy }}'"
-  
+- name: install tpm
+  git:
+    repo: https://github.com/CNLHC/.dotfile
+    dest: ~/.dotfile
+
 - name: zsh settings
   include: zsh.yaml
 

@@ -4,3 +4,5 @@
   become_method: sudo
   roles:
     - fancy-shell
+    - golang
+    - node
