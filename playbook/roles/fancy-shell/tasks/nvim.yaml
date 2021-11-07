@@ -66,8 +66,3 @@
     dest: ~/.config/nvim/coc-settings.json
     state: link
 
-- name: create nvim bin link
-  file:
-    src: /usr/local/bin/nvim
-    dest: /usr/bin/nvim
-    state: link

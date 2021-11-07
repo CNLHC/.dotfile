@@ -17,10 +17,12 @@
       - zsh
       - tmux
 
-- name: install tpm
+
+- name: install dotfile
   git:
     repo: https://github.com/CNLHC/.dotfile
     dest: ~/.dotfile
+    update: false
 
 - name: zsh settings
   include: zsh.yaml
