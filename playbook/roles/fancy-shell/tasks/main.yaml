@@ -1,8 +1,8 @@
 - name: set git proxy
-  shell: "git config --global http.proxy '{{ socks5_proxy }}'"
+  shell: "git config --global http.proxy '{{ http_proxy }}'"
 
 - name: check git proxy settings
-  failed_when: (socks5_proxy == "" and mainland) or (socks5_proxy != "" and  not mainland)
+  failed_when: (http_proxy == "" and mainland) or (http_proxy != "" and  not mainland)
   debug:
     msg: "正确配置github代理"
 
@@ -15,6 +15,7 @@
       - curl
       - git
       - zsh
+      - rsync
       - tmux
 
 
@@ -32,10 +33,3 @@
 
 - name: tmux settings
   include: tmux.yaml
-
-- name: k8s utilities
-  when: kubernetes
-  include: k8s.yaml
-
-- name: powerline
-  include: powerline.yaml

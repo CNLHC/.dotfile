@@ -2,6 +2,11 @@
   connection: local
   become_user: root
   become_method: sudo
+  vars:
+    proxy_env:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
+      all_proxy: "{{ all_proxy }}"
   roles:
     - fancy-shell
     - golang

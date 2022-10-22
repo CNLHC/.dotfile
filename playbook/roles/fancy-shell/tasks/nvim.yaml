@@ -28,7 +28,7 @@
     dest: ~/.vimrc
     create: yes
 
-- name: Check is  nvim installed
+- name: Check is nvim installed
   shell: command -v  nvim >/dev/null 2>&1
   register: is_nvim_exists
   ignore_errors: yes
@@ -40,6 +40,9 @@
   get_url:
     dest: /tmp/nvim-linux64.tar.gz
     url: "{{ nvim_download_url }}"
+  environment:
+    https_proxy: "{{ https_proxy }}"
+    https_proxy: "{{ http_proxy }}"
 
 - name: unarchive nvim
   become: true
