@@ -42,3 +42,6 @@
 
 - name: tmux settings
   include: tmux.yaml
+
+- name: starship settings
+  include: starship.yaml

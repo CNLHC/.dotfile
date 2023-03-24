@@ -1,0 +1,27 @@
+
+- name: check if starship binary exists
+  stat: 
+    path: /usr/local/bin/starship
+  register: ss_stat
+
+- name: get starship install script
+  when: ss_stat.stat.exists == false
+  uri:
+    status_code: [304,200]
+    url: https://starship.rs/install.sh
+    dest: /tmp/install-starship.sh
+    mode: 0755
+  retries: 3
+
+
+
+- name: install starship
+  when: ss_stat.stat.exists == false
+  command: "sh /tmp/install-starship.sh -y"
+
+- name: enable starship in .zshrc
+  lineinfile:
+    state: present
+    line: eval "$(starship init zsh)"
+    dest: ~/.zshrc
+    create: yes

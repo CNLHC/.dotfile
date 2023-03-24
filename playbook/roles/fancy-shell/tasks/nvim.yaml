@@ -40,9 +40,6 @@
   get_url:
     dest: /tmp/nvim-linux64.tar.gz
     url: "{{ nvim_download_url }}"
-  environment:
-    https_proxy: "{{ https_proxy }}"
-    https_proxy: "{{ http_proxy }}"
 
 - name: unarchive nvim
   become: true
