@@ -10,6 +10,3 @@ https_proxy: "http://localhost:7890"
 all_proxy: "http://localhost:7890"
 socks5_proxy: "socks5h://localhost:7890"
 kubernetes: false
-
-
-

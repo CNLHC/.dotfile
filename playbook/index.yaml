@@ -1,5 +1,4 @@
-- hosts: 127.0.0.1
-  connection: local
+- hosts: all
   become_user: root
   become_method: sudo
   vars:
@@ -7,7 +6,9 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
       all_proxy: "{{ all_proxy }}"
+  environment: "{{ proxy_env }}"
   roles:
     - fancy-shell
-    - golang
-    - node
+    # - golang
+    # - node
+

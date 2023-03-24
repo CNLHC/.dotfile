@@ -15,6 +15,7 @@
 - name: install oh-my-zsh
   when: zsh_stat.stat.exists == false
   shell: /tmp/install-zsh.sh
+  environment: "{{ proxy_env }}"
 
 - name: add default oh-my-zsh plugins
   replace:

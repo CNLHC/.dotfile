@@ -1,1 +1,3 @@
-Don't READ ME
+# Dotfile
+
+Common machine operation tasks utilized by @CNLHC
