@@ -1,10 +1,3 @@
-- name: set git proxy
-  shell: "git config --global http.proxy '{{ http_proxy }}'"
-
-- name: check git proxy settings
-  failed_when: (http_proxy == "" and mainland) or (http_proxy != "" and  not mainland)
-  debug:
-    msg: "正确配置github代理"
 
 - name: install necessary packages
   become: yes
@@ -18,6 +11,22 @@
       - rsync
       - tmux
 
+- name: set git proxy
+  shell: "git config --global http.proxy '{{ http_proxy }}'"
+
+- name: http proxy settings provided
+  failed_when: (http_proxy == "" and mainland) or (http_proxy != "" and  not mainland)
+  debug:
+    msg: "正确在变量中配置github代理"
+  
+- name: check proxy connectivity
+  ansible.builtin.uri:
+    timeout: 15
+    url: https://www.google.com
+    use_proxy: true
+  register: this
+  failed_when: "this.status != 200"
+  environment: "{{ proxy_env }}"
 
 - name: install dotfile
   git:

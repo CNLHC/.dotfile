@@ -21,3 +21,8 @@ Type=notify
 
 [Install]
 WantedBy=multi-user.target
+
+tailscale up \
+    --loginserver https://vpn.internal.seekthought.com:8080 \
+    --accept-dns=false \
+    --advertise-routes=192.168.2.0/2
