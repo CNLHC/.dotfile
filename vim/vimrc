@@ -14,6 +14,7 @@ set nu rnu
 set foldmethod=indent
 set helpheight=40
 set background=dark
+set mouse=
 
 colorscheme slate
 
