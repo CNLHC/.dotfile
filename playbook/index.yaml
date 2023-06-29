@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: ali-bridge-1
   become_user: root
   become_method: sudo
   vars:
@@ -6,6 +6,12 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
       all_proxy: "{{ all_proxy }}"
+      no_proxy: ""
+    no_proxy:
+      http_proxy: ""
+      https_proxy: ""
+      all_proxy: ""
+      no_proxy: ""
   environment: "{{ proxy_env }}"
   roles:
     - fancy-shell
