@@ -1,4 +1,4 @@
-- hosts: ali-bridge-1
+- hosts: localhost
   become_user: root
   become_method: sudo
   vars:
